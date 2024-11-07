@@ -1,4 +1,7 @@
 google-cloud-aiplatform
 functions-framework==3.*
+pyyaml
 opencv-python
 Pillow
+# TTS, STT, etc
+elevenlabs

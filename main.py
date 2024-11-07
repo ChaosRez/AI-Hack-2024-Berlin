@@ -2,6 +2,7 @@ import cv2
 import time
 import base64
 from explainer import explain_photo
+from tts import text_to_speech
 
 
 def capture_and_generate(sleep_duration):
@@ -31,8 +32,10 @@ def capture_and_generate(sleep_duration):
             prompt = "explain this photo briefly as you do for a blind person (answer without any opening sentence)"
             response_text = explain_photo(prompt, image_base64)
             print(response_text)
+            text_to_speech([response_text])
 
-            # Wait for 3 seconds
+
+            # Wait for before next capture
             time.sleep(sleep_duration)
 
     finally:
@@ -42,4 +45,4 @@ def capture_and_generate(sleep_duration):
 
 
 if __name__ == "__main__":
-    capture_and_generate(3)  # Call the function with a 3-second sleep duration
+    capture_and_generate(5)  # Call the function with a 3-second sleep duration
