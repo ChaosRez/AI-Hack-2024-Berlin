@@ -27,5 +27,3 @@ def text_to_speech(texts):
         text_to_speech_duration = time.time() - start_time
         print(f"tts response time: {text_to_speech_duration:.2f} seconds")
         play(audio)
-
-

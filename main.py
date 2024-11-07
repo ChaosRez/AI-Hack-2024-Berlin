@@ -3,6 +3,7 @@ import time
 import base64
 from explainer import explain_photo
 from tts import text_to_speech
+from stt import speech_to_text
 
 
 def capture_and_generate(sleep_duration):
@@ -14,6 +15,14 @@ def capture_and_generate(sleep_duration):
 
     try:
         while True:
+            start_time = time.time()
+            question = speech_to_text()
+            sst_duration = time.time() - start_time
+            print(f"Recognized text: {question} (sst duration: {sst_duration:.2f} seconds)")
+            if question == "":
+                # print("Appearently, no questions were asked.")
+                continue
+
             # Capture frame-by-frame
             ret, frame = cap.read()
             if not ret:
@@ -25,7 +34,11 @@ def capture_and_generate(sleep_duration):
             image_base64 = base64.b64encode(buffer).decode('utf-8')
 
             # prompt and generate explanation
-            prompt = "explain this photo briefly as you do for a blind person (answer without any opening sentence)"
+            # prompt = "explain this photo briefly as you do for a blind person (answer without any opening sentence)"
+           # prompt = "answer my question concisely about what you see from my rear phone camera concisely. I am blind and need your assist (answer without any opening sentence):  "
+            prompt = "answer my question  about what you see from camera concisely. Importantly am blind and you are are my eyes and my guide (answer without any opening sentence):  "
+            # prompt += "is there a barrier in front of me? if yes how far?"
+            prompt += question + "?"
 
             start_time = time.time()
             response_text = explain_photo(prompt, image_base64)
@@ -38,7 +51,7 @@ def capture_and_generate(sleep_duration):
             start_time = time.time()
             text_to_speech([response_text])  # tts  #TODO Async this?
             text_to_speech_duration = time.time() - start_time
-            print(f"speech run time: {text_to_speech_duration:.2f} seconds")
+            print(f"tts time: {text_to_speech_duration:.2f} seconds")
 
             # Wait for before next capture
             time.sleep(sleep_duration)
