@@ -2,6 +2,11 @@ google-cloud-aiplatform
 functions-framework==3.*
 pyyaml
 opencv-python
-Pillow
+
+# detection
+FER # for test
+deepface
+tf-keras
+
 # TTS, STT, etc
 elevenlabs

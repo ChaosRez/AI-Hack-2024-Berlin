@@ -20,20 +20,25 @@ def capture_and_generate(sleep_duration):
                 print("Error: Could not read frame.")
                 break
 
-            # Save the captured frame to a file
-            # image_path = "_archive/captured_image.jpg"
-            # cv2.imwrite(image_path, frame)
-
             # Encode the captured frame to base64
             _, buffer = cv2.imencode('.jpg', frame)
             image_base64 = base64.b64encode(buffer).decode('utf-8')
 
-            # prompt
+            # prompt and generate explanation
             prompt = "explain this photo briefly as you do for a blind person (answer without any opening sentence)"
-            response_text = explain_photo(prompt, image_base64)
-            print(response_text)
-            text_to_speech([response_text])
 
+            start_time = time.time()
+            response_text = explain_photo(prompt, image_base64)
+            explain_photo_duration = time.time() - start_time
+            print(f"explain execution time: {explain_photo_duration:.2f} seconds")
+
+            # Print and speak the response
+            print(response_text)
+
+            start_time = time.time()
+            text_to_speech([response_text])  # tts  #TODO Async this?
+            text_to_speech_duration = time.time() - start_time
+            print(f"speech run time: {text_to_speech_duration:.2f} seconds")
 
             # Wait for before next capture
             time.sleep(sleep_duration)
