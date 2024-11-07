@@ -2,10 +2,8 @@ import base64
 import vertexai
 from vertexai.generative_models import GenerativeModel, Part, SafetySetting
 
-def explain_photo(prompt, image_path):
-    with open(image_path, "rb") as image_file:
-        image_data = base64.b64encode(image_file.read())
-    image_part = Part.from_data(data=base64.b64decode(image_data), mime_type="image/jpeg")
+def explain_photo(prompt, image_base64):
+    image_part = Part.from_data(data=base64.b64decode(image_base64), mime_type="image/jpeg")
 
     generation_config = {
         "max_output_tokens": 8192,

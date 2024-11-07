@@ -1,5 +1,6 @@
 import cv2
 import time
+import base64
 from explainer import explain_photo
 
 
@@ -19,12 +20,16 @@ def capture_and_generate(sleep_duration):
                 break
 
             # Save the captured frame to a file
-            image_path = "_archive/captured_image.jpg"
-            cv2.imwrite(image_path, frame)
+            # image_path = "_archive/captured_image.jpg"
+            # cv2.imwrite(image_path, frame)
+
+            # Encode the captured frame to base64
+            _, buffer = cv2.imencode('.jpg', frame)
+            image_base64 = base64.b64encode(buffer).decode('utf-8')
 
             # prompt
             prompt = "explain this photo briefly as you do for a blind person (answer without any opening sentence)"
-            response_text = explain_photo(prompt, image_path)
+            response_text = explain_photo(prompt, image_base64)
             print(response_text)
 
             # Wait for 3 seconds
