@@ -10,3 +10,5 @@ tf-keras
 
 # TTS, STT, etc
 elevenlabs
+pyaudio
+SpeechRecognition

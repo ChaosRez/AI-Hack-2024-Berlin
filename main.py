@@ -17,8 +17,8 @@ def capture_and_generate(sleep_duration):
         while True:
             start_time = time.time()
             question = speech_to_text()
-            sst_duration = time.time() - start_time
-            print(f"Recognized text: {question} (sst duration: {sst_duration:.2f} seconds)")
+            stt_duration = time.time() - start_time
+            print(f"Recognized text: {question} (stt duration: {stt_duration:.2f} seconds)")
             if question == "":
                 # print("Appearently, no questions were asked.")
                 continue
@@ -34,9 +34,7 @@ def capture_and_generate(sleep_duration):
             image_base64 = base64.b64encode(buffer).decode('utf-8')
 
             # prompt and generate explanation
-            # prompt = "explain this photo briefly as you do for a blind person (answer without any opening sentence)"
-           # prompt = "answer my question concisely about what you see from my rear phone camera concisely. I am blind and need your assist (answer without any opening sentence):  "
-            prompt = "answer my question  about what you see from camera concisely. Importantly am blind and you are are my eyes and my guide (answer without any opening sentence):  "
+            prompt = "answer my question concisely about what you see from my rear phone camera concisely. I am blind and need your assist (answer without any opening sentence):  "
             # prompt += "is there a barrier in front of me? if yes how far?"
             prompt += question + "?"
 
@@ -63,4 +61,4 @@ def capture_and_generate(sleep_duration):
 
 
 if __name__ == "__main__":
-    capture_and_generate(5)  # Call the function with a 3-second sleep duration
+    capture_and_generate(0)  # Call the function with an x-second sleep duration
